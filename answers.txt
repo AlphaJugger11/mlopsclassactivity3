@@ -1,0 +1,26 @@
+1. How does CI/CD improve collaboration in ML teams?
+Continuous Integration (CI) and Continuous Deployment (CD) make ML teamwork smoother by automating testing, training, and evaluation steps. Every code push triggers model retraining and validation, ensuring consistency across environments. This avoids "it worked on my machine" issues and lets data scientists and engineers collaborate efficiently through shared, reproducible pipelines.
+
+2. What happens if the evaluation score is below a defined threshold?
+If the model accuracy (or any chosen metric) falls below the threshold defined in evaluate.py, the workflow will fail automatically (SystemExit stops execution). This prevents poor-quality models from being promoted or deployed - acting as a quality gate for your ML pipeline.
+
+3. How can retraining or drift detection be integrated into this workflow?
+You can extend the pipeline by adding:
+
+A data drift detection step that monitors new data distributions.
+
+A scheduled trigger (on: schedule) to retrain models periodically.
+
+Conditional logic to automatically retrain only when drift or performance drop is detected.
+This keeps the model updated and robust over time.
+
+4. What steps are needed to deploy this workflow to production (e.g., AWS, Kubernetes)?
+To deploy:
+
+Build and push a Docker image using Dockerfile.serve.
+
+Deploy the container to a cloud service (AWS ECR + ECS, GCP, or Kubernetes cluster).
+
+Add a deployment stage to the CI/CD pipeline - e.g., using kubectl apply or GitHub Action deploy steps.
+
+Optionally integrate with a model registry and monitoring system (e.g., MLflow, Prometheus).
